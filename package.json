@@ -1,0 +1,25 @@
+{
+  "name": "tangerieve",
+  "version": "1.0.0",
+  "description": "Generate art experiments",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jolson88/tangerieve.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jolson88/tangerieve/issues"
+  },
+  "homepage": "https://github.com/jolson88/tangerieve#readme",
+  "dependencies": {
+    "@types/p5": "^0.9.1"
+  }
+}
