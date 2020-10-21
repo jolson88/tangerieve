@@ -1,16 +1,16 @@
 /// <reference path="../node_modules/@types/p5/global.d.ts" />
+/// <reference path="../node_modules/@types/ramda/index.d.ts" />
 
 const size = 600;
+const colorRange = 180; // How much of the 0-255 should be used for colors
+const colorOffset = 50; // The value the first color should start at
+const colorStride = colorRange / gradients; // The value each color should be offset by in the gradient
 const gradients = 12;
 let colorLookup = [];
 
 function setup() {
   createCanvas(size, size);
-  const colorRange = 180;
-  const colorStride = colorRange / gradients;
-  for (let i = 0; i < gradients; i++) {
-    colorLookup.push(i * colorStride + 50);
-  }
+  colorLookup = R.range(0, gradients).map((i) => i * colorStride + colorOffset);
 }
 
 function draw() {
