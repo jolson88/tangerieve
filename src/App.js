@@ -10,7 +10,7 @@ function usePixels(canvasRef, sketchFn) {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
     const pixels = ctx.createImageData(canvas.width, canvas.height);
-    sketchFn(function setPixel(x, y, r, g, b) {
+    sketchFn(canvas.width, canvas.height, function setPixel(x, y, r, g, b) {
       const idx = (y * canvas.height * stride) + (x * stride);
       pixels.data[idx] = r;
       pixels.data[idx+1] = g;
@@ -29,13 +29,11 @@ function Sketch() {
   const colorStride = colorRange / gradients; // The value each color should be offset by in the gradient
   const colorLookup = range(0, gradients).map(i => i * colorStride + colorOffset);
 
-  usePixels(canvasRef, (setPixel) => {
-    const w = canvasRef.current.width;
-    const h = canvasRef.current.height;
-    for (let y = 0; y < w; y++) {
-      for (let x = 0; x < h; x++) {
-        const i = (x + 1) + ((x + 1) / w);
-        const j = (y + 1) + ((y + 1) / h); 
+  usePixels(canvasRef, (width, height, setPixel) => {
+    for (let y = 0; y < width; y++) {
+      for (let x = 0; x < height; x++) {
+        const i = (x + 1) + ((x + 1) / width);
+        const j = (y + 1) + ((y + 1) / height); 
         const v = Math.round(i * i + j * j);
 
         const color = colorLookup[v % gradients];
