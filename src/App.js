@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { range } from 'ramda';
+import * as R from 'ramda';
 
 import './App.css';
 
@@ -27,19 +27,16 @@ function Sketch() {
   const colorRange = 180; // How much of the 0-255 should be used for colors
   const colorOffset = 50; // The value the first color should start at
   const colorStride = colorRange / gradients; // The value each color should be offset by in the gradient
-  const colorLookup = range(0, gradients).map(i => i * colorStride + colorOffset);
+  const colorLookup = R.range(0, gradients).map(i => i * colorStride + colorOffset);
 
   usePixels(canvasRef, (width, height, setPixel) => {
-    for (let y = 0; y < width; y++) {
-      for (let x = 0; x < height; x++) {
-        const i = (x + 1) + ((x + 1) / width);
-        const j = (y + 1) + ((y + 1) / height); 
-        const v = Math.round(i * i + j * j);
-
-        const color = colorLookup[v % gradients];
-        setPixel(x, y, color, color, color);
-      }
-    }
+    R.xprod(R.range(0, width), R.range(0, height)).forEach(([x, y]) => {
+      const i = (x + 1) + ((x + 1) / width);
+      const j = (y + 1) + ((y + 1) / height); 
+      const v = Math.round(i * i + j * j);
+      const color = colorLookup[v % gradients];
+      setPixel(x, y, color, color, color);
+    });
   })
 
   return (
