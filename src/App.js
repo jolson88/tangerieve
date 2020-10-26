@@ -3,6 +3,24 @@ import { range } from 'ramda';
 
 import './App.css';
 
+function usePixels(canvasRef, sketchFn) {
+  const stride = 4;
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    const pixels = ctx.createImageData(canvas.width, canvas.height);
+    sketchFn(function setPixel(x, y, r, g, b) {
+      const idx = (y * canvas.height * stride) + (x * stride);
+      pixels.data[idx] = r;
+      pixels.data[idx+1] = g;
+      pixels.data[idx+2] = b;
+      pixels.data[idx+3] = 255;
+    });
+    ctx.putImageData(pixels, 0, 0);
+  }, [canvasRef, sketchFn]);
+}
+
 function Sketch() {
   const canvasRef = React.createRef();
   const gradients = 12;
@@ -11,13 +29,9 @@ function Sketch() {
   const colorStride = colorRange / gradients; // The value each color should be offset by in the gradient
   const colorLookup = range(0, gradients).map(i => i * colorStride + colorOffset);
 
-  useEffect(() => {
+  usePixels(canvasRef, (setPixel) => {
     const w = canvasRef.current.width;
     const h = canvasRef.current.height;
-    const stride = 4; // each pixel has 4 integers: R, G, B, and A
-    const ctx = canvasRef.current.getContext('2d');
-    let pixels = ctx.createImageData(w, h);
-
     for (let y = 0; y < w; y++) {
       for (let x = 0; x < h; x++) {
         const i = (x + 1) + ((x + 1) / w);
@@ -25,15 +39,10 @@ function Sketch() {
         const v = Math.round(i * i + j * j);
 
         const color = colorLookup[v % gradients];
-        const idx = (y * h * stride) + (x * stride);
-        pixels.data[idx] = color;
-        pixels.data[idx+1] = color;
-        pixels.data[idx+2] = color;
-        pixels.data[idx+3] = 255;
+        setPixel(x, y, color, color, color);
       }
     }
-    ctx.putImageData(pixels, 0, 0);
-  }, [colorLookup, canvasRef]);
+  })
 
   return (
     <div style={{ margin: '10pt' }}>
@@ -45,7 +54,7 @@ function Sketch() {
 function Header() {
   return (
     <header>
-      <div>Tangerieve - Generative Art Experiments</div>
+      <div>Tangerieve - Exploring generative art concepts</div>
       <Sketch />
     </header>
   );
