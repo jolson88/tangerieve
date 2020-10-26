@@ -4,6 +4,7 @@ import { range } from 'ramda';
 import './App.css';
 
 function Sketch() {
+  const canvasRef = React.createRef();
   const gradients = 12;
   const colorRange = 180; // How much of the 0-255 should be used for colors
   const colorOffset = 50; // The value the first color should start at
@@ -11,11 +12,10 @@ function Sketch() {
   const colorLookup = range(0, gradients).map(i => i * colorStride + colorOffset);
 
   useEffect(() => {
-    const canvas = document.getElementById('sketch');
-    const w = canvas.width;
-    const h = canvas.height;
+    const w = canvasRef.current.width;
+    const h = canvasRef.current.height;
     const stride = 4; // each pixel has 4 integers: R, G, B, and A
-    const ctx = canvas.getContext('2d');
+    const ctx = canvasRef.current.getContext('2d');
     let pixels = ctx.createImageData(w, h);
 
     for (let y = 0; y < w; y++) {
@@ -33,11 +33,11 @@ function Sketch() {
       }
     }
     ctx.putImageData(pixels, 0, 0);
-  }, [colorLookup]);
+  }, [colorLookup, canvasRef]);
 
   return (
     <div style={{ margin: '10pt' }}>
-      <canvas id="sketch" className="Sketch" width="400" height="400" />
+      <canvas className="Sketch" width="400" height="400" ref={canvasRef} />
     </div>
   );
 }
