@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+.siteHeader {
+  margin: 0;
+  padding: 0;
+  background-color: rgb(15, 1, 63);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  nav {
+    a {
+      padding: 0px 20px;
+      transition: all 0.3s ease 0s;
+      text-decoration: none;
+      font-family: "Open Sans", sans-serif;
+      font-weight: 500;
+      font-size: 18px;
+      color: white;
+    }
+    a:hover {
+      color: rgb(201, 24, 245);
+    }
+  }
+}
+
+h1 {
+  margin: 0;
+  color: white;
+  font-family: "Playfair Display", serif;
+  font-weight: 500;
+  font-size: 22px;
+}
