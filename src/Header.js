@@ -1,12 +1,13 @@
 import React from 'react';
 
 import './Header.scss';
+import logo from './logo.svg';
 
 function Header() {
   return (
     <header className="siteHeader">
-      {/*<img className="logo" src="images/logo.svg" alt="logo" />*/}
-      <h1>Tangerieve - Exploring generative art concepts</h1>
+      <img className="logo" src={logo} alt="logo" />
+      <h1>Exploring generative art concepts</h1>
       <nav>
         <a href="#Simple">Simple</a>
         <a href="#Animated">Animated</a>
