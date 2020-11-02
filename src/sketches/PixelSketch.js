@@ -60,9 +60,7 @@ function PixelSketch(props) {
   usePixels(canvasRef, sketch);
 
   return (
-    <main style={{ margin: '10pt' }}>
-      <canvas className="Sketch" width="400" height="400" ref={canvasRef} />
-    </main>
+    <canvas className="Sketch" width={props.width} height={props.height} ref={canvasRef} />
   );
 }
 
