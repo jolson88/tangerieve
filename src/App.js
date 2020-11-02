@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from './Header';
-import Sketch from './sketches/Sketch';
+
+import { PixelSketch, Sketches } from './sketches/PixelSketch';
 
 import './App.scss';
 
@@ -8,7 +9,7 @@ function App() {
   return (
     <div className="App">
       <Header />      
-      <Sketch />
+      <PixelSketch sketch={ Sketches.XSQUARED_YSQUARED } />
     </div>
   );
 }
