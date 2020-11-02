@@ -6,11 +6,13 @@ import { usePixels } from './usePixels';
 
 const Sketches = {
   SET_PIXEL: 0,
-  XSQUARED_YSQUARED: 1,
+  COLOR_LERP: 1,
+  XSQUARED_YSQUARED: 2,
 }
 
 let sketchLookup = [];
 sketchLookup[Sketches.SET_PIXEL] = createSetPixelSketch();
+sketchLookup[Sketches.COLOR_LERP] = createColorLerp();
 sketchLookup[Sketches.XSQUARED_YSQUARED] = createXSquaredYSquaredSketch();
 
 function createSetPixelSketch() {
@@ -19,6 +21,16 @@ function createSetPixelSketch() {
       const mod = (x % 2 + y % 2) % 2;
       const [r, g, b] = (mod === 0) ? [255, 0, 0] : [0, 255, 0];
       setPixel(x, y, r, g, b);
+    });
+  }
+}
+
+function createColorLerp() {
+  return (width, height, setPixel) => {
+    R.xprod(R.range(0, width), R.range(0, height)).forEach(([x, y]) => {
+      const r = Math.floor((x / width) * 255);
+      const g = Math.floor((y / height) * 255);
+      setPixel(x, y, r, g, 0, 255);
     });
   }
 }

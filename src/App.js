@@ -9,7 +9,7 @@ function App() {
   return (
     <div className="App">
       <Header />      
-      <PixelSketch sketch={ Sketches.XSQUARED_YSQUARED } />
+      <PixelSketch sketch={ Sketches.COLOR_LERP } />
     </div>
   );
 }
